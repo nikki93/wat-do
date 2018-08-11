@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Libraries
 
-local bump = require 'https://raw.githubusercontent.com/kikito/bump.lua/master/bump.lua'
+local bump = require 'bump' -- 'https://raw.githubusercontent.com/kikito/bump.lua/master/bump.lua'
 
 
 --------------------------------------------------------------------------------
