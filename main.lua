@@ -16,6 +16,8 @@ PLAYER_JUMP_SPEED = 21
 PLAYER_RUN_SPEED = 16
 PLAYER_FLOOR_CHECK_THRESHOLD = 0.1 -- How far from feet to look when checking for floors?
 
+BLOCK_MOVE_SPEED = 9
+
 
 --------------------------------------------------------------------------------
 -- Modules
@@ -87,6 +89,10 @@ function love.update(dt)
     player.tryLeft = love.keyboard.isDown('left')
     player.tryRight = love.keyboard.isDown('right')
     player:update(dt)
+
+    for _, block in ipairs(blocks) do
+        block:update(dt)
+    end
 end
 
 function love.keypressed(key)

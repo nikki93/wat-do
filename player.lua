@@ -55,6 +55,13 @@ function Player:update(dt)
     self.vy = (newY - self.y) / dt
     self.x, self.y = newX, newY
 
+    -- Notify any mover blocks we've run into
+    for _, col in ipairs(cols) do
+        if col.other.isMover then
+            col.other:setMoveDir(col.normal.x, col.normal.y)
+        end
+    end
+
     -- Figure out whether we can double jump now
     self.canDoubleJump = self.canDoubleJump or self:_floored()
 end
