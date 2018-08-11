@@ -1,11 +1,10 @@
 local Level = {}
 
-function Level.create()
-    local level = setmetatable({}, {
-        __index = Level
-    })
-    level.bumpWorld = bump.newWorld(1)
-    return level
+function Level:create()
+    self = self or {}
+    setmetatable(self, { __index = Level })
+    self.bumpWorld = bump.newWorld(1)
+    return self
 end
 
 return Level

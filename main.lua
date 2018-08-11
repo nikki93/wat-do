@@ -40,7 +40,13 @@ function love.draw()
         love.graphics.translate(
             0.5 * love.graphics.getWidth(),
             0.5 * love.graphics.getHeight())
-        love.graphics.scale(32, 32)
+        love.graphics.scale(G, G)
+
+        -- Set clipping bounds
+        love.graphics.setScissor(
+            0.5 * love.graphics.getWidth() - 0.5 * W * G,
+            0.5 * love.graphics.getHeight() - 0.5 * H * G,
+            W * G, H * G)
 
         -- Draw white background
         love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
@@ -48,4 +54,8 @@ function love.draw()
         -- Draw player
         player:draw()
     end)
+end
+
+function love.update(dt)
+    player:update(dt)
 end
