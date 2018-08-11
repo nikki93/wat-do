@@ -14,6 +14,8 @@ function Player:create()
     self.tryLeft = false
     self.tryRight = false
 
+    self.canDoubleJump = false
+
     -- Add to bump world
     self.level.bumpWorld:add(self, self.x - 0.5, self.y - 0.5, 1, 1)
 
@@ -50,14 +52,27 @@ function Player:update(dt)
     self.vx = (newX - self.x) / dt
     self.vy = (newY - self.y) / dt
     self.x, self.y = newX, newY
+
+    -- Figure out whether we can double jump now
+    self.canDoubleJump = self.canDoubleJump or self:_floored()
 end
 
-function Player:tryJump()
-    -- Check for floors below
+function Player:_floored()
     local items = self.level.bumpWorld:queryRect(
         self.x - 0.5, self.y - 0.5 + PLAYER_FLOOR_CHECK_THRESHOLD, 1, 1,
         function(obj) return obj.isFloor end)
-    if #items > 0 then
+    return #items > 0
+end
+
+function Player:tryJump()
+    local canJump
+    if self:_floored() then
+        canJump = true
+    elseif self.canDoubleJump then
+        self.canDoubleJump = false
+        canJump = true
+    end
+    if canJump then
         self.vy = -PLAYER_JUMP_SPEED
     end
 end

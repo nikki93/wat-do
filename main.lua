@@ -11,8 +11,8 @@ G = 24 -- Number of pixels a grid unit renders to
 
 W, H = 35, 25 -- Number of grid units wide and height the screen is
 
-PLAYER_GRAVITY = 34
-PLAYER_JUMP_SPEED = 16
+PLAYER_GRAVITY = 50
+PLAYER_JUMP_SPEED = 21
 PLAYER_RUN_SPEED = 16
 PLAYER_FLOOR_CHECK_THRESHOLD = 0.1 -- How far from feet to look when checking for floors?
 
@@ -47,7 +47,7 @@ function love.load()
             table.insert(blocks, Block.create({
                 level = level,
                 x = x,
-                y = 4,
+                y = math.floor(H / 2),
             }))
         end
     end
