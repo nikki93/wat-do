@@ -53,7 +53,13 @@ function Player:update(dt)
 end
 
 function Player:tryJump()
-    self.vy = -PLAYER_JUMP_SPEED
+    -- Check for floors below
+    local items = self.level.bumpWorld:queryRect(
+        self.x - 0.5, self.y - 0.5 + PLAYER_FLOOR_CHECK_THRESHOLD, 1, 1,
+        function(obj) return obj.isFloor end)
+    if #items > 0 then
+        self.vy = -PLAYER_JUMP_SPEED
+    end
 end
 
 return Player

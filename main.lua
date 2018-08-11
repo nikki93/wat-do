@@ -14,6 +14,7 @@ W, H = 25, 18.75 -- Number of grid units wide and height the screen is
 PLAYER_GRAVITY = 34
 PLAYER_JUMP_SPEED = 16
 PLAYER_RUN_SPEED = 16
+PLAYER_FLOOR_CHECK_THRESHOLD = 0.1 -- How far from feet to look when checking for floors?
 
 
 --------------------------------------------------------------------------------

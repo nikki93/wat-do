@@ -8,6 +8,8 @@ function Block:create()
     self.x = self.x or 0
     self.y = self.y or 0
 
+    self.isFloor = true
+
     -- Add to bump world
     self.level.bumpWorld:add(self, self.x - 0.5, self.y - 0.5, 1, 1)
 
