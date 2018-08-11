@@ -5,14 +5,13 @@ function Player:create()
     self = self or {}
     setmetatable(self, { __index = Player })
     assert(self.level, 'need `level`!')
-    self.x = self.x or 0
-    self.y = self.y or 0
+    self.x, self.y = self.x or 0, self.y or 0
 
-    self.vx = 0
-    self.vy = 0
+    self.isPlayer = true
 
-    self.tryLeft = false
-    self.tryRight = false
+    self.vx, self.vy = 0, 0
+
+    self.tryLeft, self.tryRight = false, false
 
     self.canDoubleJump = false
 
@@ -32,6 +31,34 @@ function Player:draw()
 end
 
 function Player:update(dt)
+    -- Be pushed by mover blocks
+    do
+        local dp = BLOCK_MOVE_SPEED * dt
+        local querySize = 1 + dp
+        local movers = self.level.bumpWorld:queryRect(
+            self.x - 0.5 * querySize, self.y - 0.5 * querySize, querySize, querySize,
+            function(obj) return obj.isMover end)
+        local dx, dy = 0, 0
+        for _, mover in ipairs(movers) do
+            if mover.moveDirX ~= 0 then
+                dx = mover.moveDirX * BLOCK_MOVE_SPEED * dt
+            end
+            if mover.moveDirY ~= 0 then
+                dy = mover.moveDirY * BLOCK_MOVE_SPEED * dt
+            end
+        end
+        self.x = self.x + dx
+        self.y = self.y + dy
+        self.level.bumpWorld:update(self, self.x - 0.5, self.y - 0.5)
+        local floors = self.level.bumpWorld:queryRect(
+            self.x - 0.5, self.y - 0.5, 1, 1,
+            function(obj) return obj.isFloor end)
+        if #floors > 0 then
+            self.level:die()
+            return
+        end
+    end
+
     -- Update vx
     self.vx = 0
     if not (self.tryLeft and self.tryRight) then

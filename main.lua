@@ -31,29 +31,10 @@ Player = require 'player'
 --------------------------------------------------------------------------------
 -- Main Love callbacks
 
-local player, level, blocks
+local level
 
 function love.load()
     level = Level.create()
-
-    player = Player.create({
-        level = level,
-        x = 0,
-        y = 0,
-    })
-
-    do
-        blocks = {}
-        local hw = math.floor(W / 2)
-        for x = -hw, hw do
-            table.insert(blocks, Block.create({
-                level = level,
-                x = x,
-                y = math.floor(H / 2),
-                isMover = x > 4,
-            }))
-        end
-    end
 end
 
 function love.draw()
@@ -74,29 +55,15 @@ function love.draw()
         love.graphics.setLineWidth(1 / G)
 
         -- Draw everything
-
         love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
-
-        for _, block in ipairs(blocks) do
-            block:draw()
-        end
-
-        player:draw()
+        level:draw()
     end)
 end
 
 function love.update(dt)
-    player.tryLeft = love.keyboard.isDown('left')
-    player.tryRight = love.keyboard.isDown('right')
-    player:update(dt)
-
-    for _, block in ipairs(blocks) do
-        block:update(dt)
-    end
+    level:update(dt)
 end
 
 function love.keypressed(key)
-    if key == 'up' then
-        player:tryJump()
-    end
+    level:keypressed(key)
 end

@@ -41,19 +41,35 @@ end
 function Block:update(dt)
     if self.isMover then
         if self.moveDirX ~= 0 or self.moveDirY ~= 0 then
+            local dx, dy = BLOCK_MOVE_SPEED * self.moveDirX * dt, BLOCK_MOVE_SPEED * self.moveDirY * dt
             local newX, newY, cols = self.level.bumpWorld:move(
-                self,
-                self.x - 0.5 + BLOCK_MOVE_SPEED * self.moveDirX * dt,
-                self.y - 0.5 + BLOCK_MOVE_SPEED * self.moveDirY * dt)
+                self, self.x - 0.5 + dx, self.y - 0.5 + dy,
+                function(self, other)
+                    if other.isPlayer then -- Player? Push them and continue in that direction...
+                        return 'cross'
+                    end
+                    return 'slide' -- Else slide against whatever it is
+                end
+            )
             newX = newX + 0.5
             newY = newY + 0.5
             self.x, self.y = newX, newY
         end
     end
+
+    self.moveDirUpdated = false
 end
 
 function Block:setMoveDir(dirX, dirY)
+    self.moveDirUpdated = true
     self.moveDirX, self.moveDirY = dirX, dirY
+    local querySize = 1.5
+    local movers = self.level.bumpWorld:queryRect(
+        self.x - 0.5 * querySize, self.y - 0.5 * querySize, querySize, querySize,
+        function(obj) return obj.isMover and not obj.moveDirUpdated end)
+    for _, mover in ipairs(movers) do
+        mover:setMoveDir(dirX, dirY)
+    end
 end
 
 return Block
