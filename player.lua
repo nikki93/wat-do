@@ -26,6 +26,8 @@ function Player:draw()
     love.graphics.stacked('all', function()
         love.graphics.setColor(1, 0, 0)
         love.graphics.rectangle('fill', self.x - 0.5, self.y - 0.5, 1, 1)
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.rectangle('line', self.x - 0.5, self.y - 0.5, 1, 1)
     end)
 end
 

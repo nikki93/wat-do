@@ -48,6 +48,7 @@ function love.load()
                 level = level,
                 x = x,
                 y = math.floor(H / 2),
+                isMover = x > 4,
             }))
         end
     end

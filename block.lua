@@ -10,6 +10,10 @@ function Block:create()
 
     self.isFloor = true
 
+    if self.isMover == nil then
+        self.isMover = false
+    end
+
     -- Add to bump world
     self.level.bumpWorld:add(self, self.x - 0.5, self.y - 0.5, 1, 1)
 
@@ -18,9 +22,13 @@ end
 
 function Block:draw()
     love.graphics.stacked('all', function()
-        love.graphics.setColor(0, 0, 1)
+        if self.isMover then
+            love.graphics.setColor(0.93, 0.76, 0.93)
+        else
+            love.graphics.setColor(0, 0, 1)
+        end
         love.graphics.rectangle('fill', self.x - 0.5, self.y - 0.5, 1, 1)
-        love.graphics.setColor(0, 1, 0)
+        love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle('line', self.x - 0.5, self.y - 0.5, 1, 1)
     end)
 end
