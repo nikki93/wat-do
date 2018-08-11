@@ -13,6 +13,7 @@ W, H = 25, 18.75 -- Number of grid units wide and height the screen is
 
 PLAYER_GRAVITY = 34
 PLAYER_JUMP_SPEED = 16
+PLAYER_RUN_SPEED = 16
 
 
 --------------------------------------------------------------------------------
@@ -81,6 +82,8 @@ function love.draw()
 end
 
 function love.update(dt)
+    player.tryLeft = love.keyboard.isDown('left')
+    player.tryRight = love.keyboard.isDown('right')
     player:update(dt)
 end
 

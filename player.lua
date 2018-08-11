@@ -7,8 +7,12 @@ function Player:create()
     assert(self.level, 'need `level`!')
     self.x = self.x or 0
     self.y = self.y or 0
+
     self.vx = 0
     self.vy = 0
+
+    self.tryLeft = false
+    self.tryRight = false
 
     -- Add to bump world
     self.level.bumpWorld:add(self, self.x - 0.5, self.y - 0.5, 1, 1)
@@ -24,6 +28,17 @@ function Player:draw()
 end
 
 function Player:update(dt)
+    -- Update vx
+    self.vx = 0
+    if not (self.tryLeft and self.tryRight) then
+        if self.tryLeft then
+            self.vx = -PLAYER_RUN_SPEED
+        end
+        if self.tryRight then
+            self.vx = PLAYER_RUN_SPEED
+        end
+    end
+
     -- Integrate acceleration
     self.vy = self.vy + PLAYER_GRAVITY * dt
 
