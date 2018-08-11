@@ -11,27 +11,43 @@ G = 32 -- Number of pixels a grid unit renders to
 
 W, H = 25, 18.75 -- Number of grid units wide and height the screen is
 
+PLAYER_GRAVITY = 20
+
 
 --------------------------------------------------------------------------------
 -- Modules
 
 util = require 'util'
 Level = require 'level'
+Block = require 'block'
 Player = require 'player'
 
 
 --------------------------------------------------------------------------------
 -- Main Love callbacks
 
-local player, level
+local player, level, blocks
 
 function love.load()
     level = Level.create()
+
     player = Player.create({
         level = level,
         x = 0,
         y = 0,
     })
+
+    do
+        blocks = {}
+        local hw = math.floor(W / 2)
+        for x = -hw, hw do
+            table.insert(blocks, Block.create({
+                level = level,
+                x = x,
+                y = 4,
+            }))
+        end
+    end
 end
 
 function love.draw()
@@ -48,10 +64,17 @@ function love.draw()
             0.5 * love.graphics.getHeight() - 0.5 * H * G,
             W * G, H * G)
 
-        -- Draw white background
+        -- Make lines look 1px wide on screen
+        love.graphics.setLineWidth(1 / G)
+
+        -- Draw everything
+
         love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
 
-        -- Draw player
+        for _, block in ipairs(blocks) do
+            block:draw()
+        end
+
         player:draw()
     end)
 end

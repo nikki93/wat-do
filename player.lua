@@ -11,8 +11,7 @@ function Player:create()
     self.vy = 0
 
     -- Add to bump world
-    self.bump = {}
-    self.level.bumpWorld:add(self.bump, self.x - 0.5, self.y - 0.5, 1, 1)
+    self.level.bumpWorld:add(self, self.x - 0.5, self.y - 0.5, 1, 1)
 
     return self
 end
@@ -25,10 +24,17 @@ function Player:draw()
 end
 
 function Player:update(dt)
-    self.vy = self.vy + 9.8 * dt
+    -- Integrate acceleration
+    self.vy = self.vy + PLAYER_GRAVITY * dt
 
-    self.x = self.x + self.vx * dt
-    self.y = self.y + self.vy * dt
+    -- Apply velocity, move, recalculate new velocity
+    local newX, newY, cols = self.level.bumpWorld:move(
+        self, self.x - 0.5 + self.vx * dt, self.y - 0.5 + self.vy * dt)
+    newX = newX + 0.5
+    newY = newY + 0.5
+    self.vx = (newX - self.x) / dt
+    self.vy = (newY - self.y) / dt
+    self.x, self.y = newX, newY
 end
 
 return Player
