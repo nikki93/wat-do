@@ -7,9 +7,9 @@ bump = require 'bump' -- 'https://raw.githubusercontent.com/kikito/bump.lua/mast
 --------------------------------------------------------------------------------
 -- Settings
 
-G = 32 -- Number of pixels a grid unit renders to
+G = 24 -- Number of pixels a grid unit renders to
 
-W, H = 25, 18.75 -- Number of grid units wide and height the screen is
+W, H = 35, 25 -- Number of grid units wide and height the screen is
 
 PLAYER_GRAVITY = 34
 PLAYER_JUMP_SPEED = 16
