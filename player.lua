@@ -37,4 +37,8 @@ function Player:update(dt)
     self.x, self.y = newX, newY
 end
 
+function Player:tryJump()
+    self.vy = -PLAYER_JUMP_SPEED
+end
+
 return Player

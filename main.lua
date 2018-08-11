@@ -11,7 +11,8 @@ G = 32 -- Number of pixels a grid unit renders to
 
 W, H = 25, 18.75 -- Number of grid units wide and height the screen is
 
-PLAYER_GRAVITY = 20
+PLAYER_GRAVITY = 34
+PLAYER_JUMP_SPEED = 16
 
 
 --------------------------------------------------------------------------------
@@ -81,4 +82,10 @@ end
 
 function love.update(dt)
     player:update(dt)
+end
+
+function love.keypressed(key)
+    if key == 'up' then
+        player:tryJump()
+    end
 end
