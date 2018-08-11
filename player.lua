@@ -1,11 +1,12 @@
 local Player = {}
 
-function Player.create(x, y)
+function Player.create(props)
     local player = setmetatable({}, {
         __index = Player,
     })
-    player.x = x
-    player.y = y
+    player.level = assert(props.level, 'need `level`!')
+    player.x = props.x or 0
+    player.y = props.y or 0
     return player
 end
 

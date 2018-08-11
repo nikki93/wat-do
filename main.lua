@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Libraries
 
-local bump = require 'bump' -- 'https://raw.githubusercontent.com/kikito/bump.lua/master/bump.lua'
+bump = require 'bump' -- 'https://raw.githubusercontent.com/kikito/bump.lua/master/bump.lua'
 
 
 --------------------------------------------------------------------------------
@@ -16,16 +16,22 @@ W, H = 25, 18.75 -- Number of grid units wide and height the screen is
 -- Modules
 
 util = require 'util'
+Level = require 'level'
 Player = require 'player'
 
 
 --------------------------------------------------------------------------------
 -- Main Love callbacks
 
-local player
+local player, level
 
 function love.load()
-    player = Player.create(0, 0)
+    level = Level.create()
+    player = Player.create({
+        level = level,
+        x = 0,
+        y = 0,
+    })
 end
 
 function love.draw()
