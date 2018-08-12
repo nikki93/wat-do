@@ -60,7 +60,7 @@ function love.load()
                 for i = 1, #titleText do
                     local char = titleText:sub(i, i)
                     local soFar = titleText:sub(1, i - 1)
-                    love.graphics.setColor(0.25 * math.random(), 0.25 * math.random(), 0.25 * math.random())
+                    love.graphics.setColor(0.6 * math.random(), 0.2 * math.random(), 0.6 * math.random())
                     love.graphics.print(titleText:sub(i, i), winFont:getWidth(soFar), 0)
                 end
 
@@ -71,7 +71,7 @@ function love.load()
                 for i = 1, #enterText do
                     local char = enterText:sub(i, i)
                     local soFar = enterText:sub(1, i - 1)
-                    love.graphics.setColor(0.25 * math.random(), 0.25 * math.random(), 0.25 * math.random())
+                    love.graphics.setColor(0.2 * math.random(), 0.2 * math.random(), 0.2 * math.random())
                     love.graphics.print(enterText:sub(i, i), winFont:getWidth(soFar), 0)
                 end
             end,
