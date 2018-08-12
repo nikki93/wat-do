@@ -40,10 +40,12 @@ function Player:update(dt)
             function(obj) return obj.isMover end)
         local dx, dy = 0, 0
         for _, mover in ipairs(movers) do
-            if mover.moveDirX ~= 0 then
+            if (mover.x < self.x and mover.moveDirX > 0) or
+                    (mover.x > self.x and mover.moveDirX < 0) then
                 dx = mover.moveDirX * BLOCK_MOVE_SPEED * dt
             end
-            if mover.moveDirY ~= 0 then
+            if (mover.y < self.y and mover.moveDirY > 0) or
+                    (mover.y > self.y and mover.moveDirY < 0) then
                 dy = mover.moveDirY * BLOCK_MOVE_SPEED * dt
             end
         end

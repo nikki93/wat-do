@@ -34,7 +34,33 @@ Player = require 'player'
 local level
 
 function love.load()
-    level = Level.create()
+    level = Level.create({}, {
+        'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        'B                                 B',
+        'B                                 B',
+        'B     P                           B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B     BBBB      BBBBBBB           B',
+        'B                                 B',
+        'B                                 B',
+        'B         MMMMMM                  B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B                                 B',
+        'B     M                           B',
+        'B     M                           B',
+        'B     M                           B',
+        'B     M                           B',
+        'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+    })
 end
 
 function love.draw()

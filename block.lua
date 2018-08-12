@@ -39,9 +39,18 @@ function Block:draw()
 end
 
 function Block:update(dt)
+    if self.updatedThisFrame then return end
+    self.updatedThisFrame = true
+
     if self.isMover then
         if self.moveDirX ~= 0 or self.moveDirY ~= 0 then
             local dx, dy = BLOCK_MOVE_SPEED * self.moveDirX * dt, BLOCK_MOVE_SPEED * self.moveDirY * dt
+            local moversInWay = self.level.bumpWorld:queryRect(
+                self.x - 0.5 + dx, self.y - 0.5 + dy, 1, 1,
+                function (obj) return obj.isMover and not obj.updatedThisFrame end)
+            for _, mover in ipairs(moversInWay) do
+                mover:update(dt)
+            end
             local newX, newY, cols = self.level.bumpWorld:move(
                 self, self.x - 0.5 + dx, self.y - 0.5 + dy,
                 function(self, other)
