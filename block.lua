@@ -178,6 +178,12 @@ function Block:setMoveDir(dirX, dirY)
                     if obj.moveDirX ~= dirX then return true end
                     return false
                 end
+
+                if obj.isPlayer then
+                    return false
+                end
+
+                return true
             end)
         if #blockers > 0 then
             return
