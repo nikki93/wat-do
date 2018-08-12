@@ -90,6 +90,8 @@ function Player:update(dt)
     for _, col in ipairs(cols) do
         if col.other.isMover then
             col.other:setMoveDir(col.normal.x, col.normal.y)
+        elseif col.other.isWin then
+            win()
         end
     end
 

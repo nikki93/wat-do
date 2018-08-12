@@ -31,15 +31,100 @@ Player = require 'player'
 --------------------------------------------------------------------------------
 -- Main Love callbacks
 
-local levels
-local level
+local levels, levelIndex
+
+function win()
+    levelIndex = levelIndex + 1
+end
+
+local winFont = love.graphics.newFont(92)
 
 function love.load()
+    levelIndex = 1
+
     levels = {
+        -- Basic movement
+        Level.create({}, { -- How to win?
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            ' P          WWWWW ',
+            'BBBBBBBBBBBBBBBBBB',
+            'BBBBBBBBBBBBBBBBBB',
+        }),
+        Level.create({}, { -- How to jump?
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '             WWWWW ',
+            '            BBBBBBB',
+            '                  ',
+            ' P         ',
+            'BBBBBBBBBBB',
+            'BBBBBBBBBBBBBBBBBB',
+        }),
+
+        Level.create({}, { -- How to double jump?
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '                  ',
+            '             WWWWW ',
+            '            BBBBBBB',
+            '                  ',
+            '                  ',
+            '                  ',
+            ' P         ',
+            'BBBBBBBBBBB',
+            'BBBBBBBBBBBBBBBBBB',
+        }),
+
+        -- Mover blocks
+        Level.create({}, {
+            '                         ',
+            '                         ',
+            '                         ',
+            '                    WWWW ',
+            '                BBBBBBBBB',
+            '                         ',
+            '                         ',
+            '                         ',
+            '                         ',
+            '                         ',
+            '                         ',
+            '                         ',
+            '                         ',
+            '  P                      ',
+            'BBBBBBBBBBMMMMBBBBBB     ',
+        }),
+
+        Level.create({}, {
+            'BBBBBBBBB      ',
+            'BBBBBBBBB      ',
+            '     MMM       ',
+            '     MMM       ',
+            '      MM       ',
+            '      MM       ',
+            '      MM       ',
+            ' WWW  MM   P   ',
+        }),
+
+    --     ------------------------
+    --     -- start here -- comment out for no skip
+    -- }
+    -- levels = {
+    --     ------------------------
+
         Level.create({}, {
             'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
-            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
             'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
             'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
             'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
@@ -61,11 +146,23 @@ function love.load()
             'BMMMM                       MMMMMMM',
             'BMMMM                       BBBBBBB',
             'BMMMM                  BBBBBMMMMMMM',
-            'BMMMM                       MMMMMMM',
+            'BMMMM       WWW             MMMMMMM',
         }),
-    }
 
-    level = levels[1]
+        {
+            draw = function()
+                love.graphics.scale(1 / G)
+                love.graphics.setFont(winFont)
+                love.graphics.translate(-winFont:getWidth('i'), 0.5 * -winFont:getHeight())
+                love.graphics.setColor(math.random(), math.random(), math.random())
+                love.graphics.print('w', -winFont:getWidth('w'), 0)
+                love.graphics.setColor(math.random(), math.random(), math.random())
+                love.graphics.print('i', 0, 0)
+                love.graphics.setColor(math.random(), math.random(), math.random())
+                love.graphics.print('n', winFont:getWidth('i'), 0)
+            end,
+        }
+    }
 end
 
 function love.draw()
@@ -87,14 +184,18 @@ function love.draw()
 
         -- Draw everything
         love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
-        level:draw()
+        levels[levelIndex]:draw()
     end)
 end
 
 function love.update(dt)
-    level:update(dt)
+    if levels[levelIndex].update then
+        levels[levelIndex]:update(dt)
+    end
 end
 
 function love.keypressed(key)
-    level:keypressed(key)
+    if levels[levelIndex].keypressed then
+        levels[levelIndex]:keypressed(key)
+    end
 end

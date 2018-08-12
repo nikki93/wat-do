@@ -33,6 +33,8 @@ function Block:draw()
             else
                 love.graphics.setColor(0.93, 0.76, 0.93)
             end
+        elseif self.isWin then
+            love.graphics.setColor(0.8, 0.5, 0.1)
         else
             love.graphics.setColor(0, 0, 1)
         end

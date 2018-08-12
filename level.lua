@@ -12,11 +12,15 @@ function Level:create(layout)
     self.player = nil
     self.blocks = {}
 
+    local maxX, maxY = 0, 0
     for i = 1, #self.layout do
         local line = self.layout[i]
         for j = 1, #line do
             local char = line:sub(j, j)
             local x, y = j, i
+
+            maxX = math.max(maxX, x)
+            maxY = math.max(maxY, y)
 
             if char == 'P' then
                 assert(not self.player, 'need max 1 `Player`')
@@ -32,11 +36,77 @@ function Level:create(layout)
                     level = self, x = x, y = y,
                     isMover = true,
                 }))
+            elseif char == 'W' then
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y,
+                    isWin = true,
+                }))
             end
         end
     end
 
     assert(self.player, 'need min 1 `Player`')
+
+    -- Outer blocks
+    do
+        local hw, hh = math.floor(W / 1.5), math.floor(H / 1.5)
+        for x = -hw, 0 do
+            for y = -hh, 0 do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = -hw, 0 do
+            for y = 1, maxY do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = -hw, 0 do
+            for y = maxY + 1, maxY + hh do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = maxX + 1, maxX + 1 + hw do
+            for y = -hh, 0 do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = maxX + 1, maxX + 1 + hw do
+            for y = 1, maxY do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = maxX + 1, maxX + 1 + hw do
+            for y = maxY + 1, maxY + hh do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = 1, maxX do
+            for y = -hh, 0 do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+        for x = 1, maxX do
+            for y = maxY + 1, maxY + 1 + hh do
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y
+                }))
+            end
+        end
+    end
 
     self.viewX, self.viewY = self.player.x, self.player.y
 
