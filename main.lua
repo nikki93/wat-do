@@ -2,6 +2,7 @@
 -- Libraries
 
 bump = require 'bump' -- 'https://raw.githubusercontent.com/kikito/bump.lua/master/bump.lua'
+moonshine = require 'moonshine'
 
 
 --------------------------------------------------------------------------------
@@ -294,26 +295,36 @@ function love.load()
     }
 end
 
+local effect = moonshine(moonshine.effects.glow).chain(moonshine.effects.posterize).chain(moonshine.effects.glow).chain(moonshine.effects.vignette)
+
+effect.glow.strength = 2
+
+effect.vignette.color = { 0.7, 0, 0.2 }
+
+effect.posterize.num_bands = 6
+
 function love.draw()
-    love.graphics.stacked('all', function()
-        -- Draw everything centered
-        love.graphics.translate(
-            0.5 * love.graphics.getWidth(),
-            0.5 * love.graphics.getHeight())
-        love.graphics.scale(G, G)
+    effect(function()
+        love.graphics.stacked('all', function()
+            -- Draw everything centered
+            love.graphics.translate(
+                0.5 * love.graphics.getWidth(),
+                0.5 * love.graphics.getHeight())
+            love.graphics.scale(G, G)
 
-        -- Set clipping bounds
-        love.graphics.setScissor(
-            0.5 * love.graphics.getWidth() - 0.5 * W * G,
-            0.5 * love.graphics.getHeight() - 0.5 * H * G,
-            W * G, H * G)
+            -- Set clipping bounds
+            love.graphics.setScissor(
+                0.5 * love.graphics.getWidth() - 0.5 * W * G,
+                0.5 * love.graphics.getHeight() - 0.5 * H * G,
+                W * G, H * G)
 
-        -- Make lines look 1px wide on screen
-        love.graphics.setLineWidth(1 / G)
+            -- Make lines look 1px wide on screen
+            love.graphics.setLineWidth(1 / G)
 
-        -- Draw everything
-        love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
-        levels[levelIndex]:draw()
+            -- Draw everything
+            love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
+            levels[levelIndex]:draw()
+        end)
     end)
 end
 
