@@ -1,6 +1,10 @@
 local Level = {}
 
+local dieSound = love.audio.newSource('./die.wav', 'static')
+
 function Level:create(layout)
+    Block.stopSounds()
+
     self = self or {}
     setmetatable(self, { __index = Level })
     self.died = false
@@ -120,6 +124,7 @@ end
 
 function Level:die()
     self.died = true
+    dieSound:play()
 end
 
 function Level:draw()

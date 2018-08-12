@@ -4,6 +4,11 @@ local function symrand(size)
     return size * (1 - 2 * math.random())
 end
 
+local moverSound = love.audio.newSource('./mover1.wav', 'static')
+local movingSound = love.audio.newSource('./mover2.wav', 'static')
+
+BLOCK_MOVE_PITCH_VARIATION = 0.1
+
 function Block:create()
     -- Init
     self = self or {}
@@ -162,6 +167,12 @@ function Block:update(dt)
             newX = newX + 0.5
             newY = newY + 0.5
             self.x, self.y = newX, newY
+            if #cols == 0 then
+                if not movingSound:isPlaying() then
+                    movingSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
+                    movingSound:play()
+                end
+            end
         end
     end
 
@@ -195,6 +206,11 @@ function Block:setMoveDir(dirX, dirY)
         end
     end
 
+    if not moverSound:isPlaying() then
+        moverSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
+        moverSound:play()
+    end
+
     self.moveDirX, self.moveDirY = dirX, dirY
     local querySize = 1 + 1 / G
     local movers = self.level.bumpWorld:queryRect(
@@ -211,6 +227,11 @@ function Block:setMoveDir(dirX, dirY)
     for _, mover in ipairs(movers) do
         mover:setMoveDir(dirX, dirY)
     end
+end
+
+function Block.stopSounds()
+    moverSound:stop()
+    movingSound:stop()
 end
 
 return Block

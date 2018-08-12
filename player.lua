@@ -3,6 +3,9 @@ local Player = {}
 local playerRightImage = love.graphics.newImage('./player-right.png')
 local playerLeftImage = love.graphics.newImage('./player-left.png')
 
+local jumpSound = love.audio.newSource('./jump.wav', 'static')
+local winSound = love.audio.newSource('./win.wav', 'static')
+
 function Player:create()
     -- Init
     self = self or {}
@@ -104,6 +107,7 @@ function Player:update(dt)
         if col.other.isMover then
             col.other:setMoveDir(col.normal.x, col.normal.y)
         elseif col.other.isWin then
+            winSound:play()
             win()
         elseif col.other.isDanger then
             self.level:die()
@@ -130,6 +134,7 @@ function Player:tryJump()
         canJump = true
     end
     if canJump then
+        jumpSound:play()
         self.vy = -PLAYER_JUMP_SPEED
     end
 end
