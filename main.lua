@@ -39,7 +39,7 @@ function win()
     levelIndex = levelIndex + 1
 end
 
-local winFont = love.graphics.newFont(92)
+local winFont = love.graphics.newFont(150)
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -163,12 +163,6 @@ function love.load()
 
         -- Section 1
 
-    --     ------------------------
-    --     -- start here -- comment out for no skip
-    -- }
-    -- levels = {
-    --     ------------------------
-
         Level.create({}, {
             'BBBBBBBB',
             'D      B',
@@ -278,12 +272,18 @@ function love.load()
             'BBBBBBBBBBBBBBBBBDDDDDDDDDDDBBBBBBBBBBBBBBBBBBBBBB',
         }),
 
+    --     ------------------------
+    --     -- start here -- comment out for no skip
+    -- }
+    -- levels = {
+    --     ------------------------
+
 
         {
             draw = function()
                 love.graphics.scale(1 / G)
                 love.graphics.setFont(winFont)
-                love.graphics.translate(-winFont:getWidth('i'), 0.5 * -winFont:getHeight())
+                love.graphics.translate(-0.5 * winFont:getWidth('i'), 0.5 * -winFont:getHeight())
                 love.graphics.setColor(math.random(), math.random(), math.random())
                 love.graphics.print('w', -winFont:getWidth('w'), 0)
                 love.graphics.setColor(math.random(), math.random(), math.random())
