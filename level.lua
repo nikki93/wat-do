@@ -41,6 +41,11 @@ function Level:create(layout)
                     level = self, x = x, y = y,
                     isWin = true,
                 }))
+            elseif char == 'D' then
+                table.insert(self.blocks, Block.create({
+                    level = self, x = x, y = y,
+                    isDanger = true,
+                }))
             end
         end
     end
@@ -170,6 +175,9 @@ end
 function Level:keypressed(key)
     if key == 'up' then
         self.player:tryJump()
+    end
+    if key == 'r' then
+        self:die()
     end
 end
 

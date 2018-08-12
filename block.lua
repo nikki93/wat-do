@@ -35,6 +35,8 @@ function Block:draw()
             end
         elseif self.isWin then
             love.graphics.setColor(0.8, 0.5, 0.1)
+        elseif self.isDanger then
+            love.graphics.setColor(0.9, 0.2, 0.2)
         else
             love.graphics.setColor(0, 0, 1)
         end

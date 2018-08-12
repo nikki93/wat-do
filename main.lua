@@ -44,6 +44,7 @@ function love.load()
 
     levels = {
         -- Basic movement
+
         Level.create({}, { -- How to win?
             '                  ',
             '                  ',
@@ -55,6 +56,7 @@ function love.load()
             'BBBBBBBBBBBBBBBBBB',
             'BBBBBBBBBBBBBBBBBB',
         }),
+
         Level.create({}, { -- How to jump?
             '                  ',
             '                  ',
@@ -66,8 +68,8 @@ function love.load()
             '            BBBBBBB',
             '                  ',
             ' P         ',
-            'BBBBBBBBBBB',
-            'BBBBBBBBBBBBBBBBBB',
+            'BBBBBBBBBBBBBBBBBBB',
+            'BBBBBBBBBBBBBBBBBBB',
         }),
 
         Level.create({}, { -- How to double jump?
@@ -87,7 +89,9 @@ function love.load()
             'BBBBBBBBBBBBBBBBBB',
         }),
 
+
         -- Mover blocks
+
         Level.create({}, {
             '                         ',
             '                         ',
@@ -117,11 +121,110 @@ function love.load()
             ' WWW  MM   P   ',
         }),
 
+        Level.create({}, {
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                     BB                               WWWW              ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '                                                                                ',
+            '    P                                                                           ',
+            '  BBBB     MMMM                                                                 ',
+            '           MMMM                                                                 ',
+            '           MMMM                                                                 ',
+            '                                                                                ',
+            'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+        }),
+
+
+        -- Section 1
+
+        Level.create({}, {
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                     MMMMMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                     MMMMMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                     MMMMMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                     MMMMMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                     MMMMMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '                        MMMMM',
+            '    DDDDDD              MMMMM',
+            '         D              MMMMM',
+            '         D              MMMMM',
+            '         D              MMMMM',
+            '         D              MMMMM',
+            '         DDDDDDDD    MMMMMMMM',
+            '                D    MMMMMMMM',
+            '                D    MMMMMMMM',
+            '                D  P MMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+            'BBBBBBBBBBBBBBBBBBBBBMMMMMMMM',
+        }),
+
     --     ------------------------
     --     -- start here -- comment out for no skip
     -- }
     -- levels = {
     --     ------------------------
+
+
+        -- Various
 
         Level.create({}, {
             'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
@@ -148,6 +251,7 @@ function love.load()
             'BMMMM                  BBBBBMMMMMMM',
             'BMMMM       WWW             MMMMMMM',
         }),
+
 
         {
             draw = function()

@@ -23,7 +23,7 @@ end
 
 function Player:draw()
     love.graphics.stacked('all', function()
-        love.graphics.setColor(1, 0, 0)
+        love.graphics.setColor(0.9, 0, 0.8)
         love.graphics.rectangle('fill', self.x - 0.5, self.y - 0.5, 1, 1)
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle('line', self.x - 0.5, self.y - 0.5, 1, 1)
@@ -92,6 +92,8 @@ function Player:update(dt)
             col.other:setMoveDir(col.normal.x, col.normal.y)
         elseif col.other.isWin then
             win()
+        elseif col.other.isDanger then
+            self.level:die()
         end
     end
 
