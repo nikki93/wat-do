@@ -41,12 +41,15 @@ end
 local winFont = love.graphics.newFont(92)
 
 function love.load()
+    love.graphics.setDefaultFilter('nearest')
+
     levelIndex = 1
 
     levels = {
         -- Basic movement
 
         Level.create({}, { -- How to win?
+            'BBBBBBBBBBBBBBBBBB',
             '                  ',
             '                  ',
             '                  ',
@@ -59,14 +62,15 @@ function love.load()
         }),
 
         Level.create({}, { -- How to jump?
+            'BBBBBBBBBBBBBBBBBBB',
             '                  ',
             '                  ',
             '                  ',
             '                  ',
             '                  ',
             '                  ',
-            '             WWWWW ',
-            '            BBBBBBB',
+            '             WWWWW',
+            '            BBBBBB',
             '                  ',
             ' P         ',
             'BBBBBBBBBBBBBBBBBBB',
@@ -74,6 +78,7 @@ function love.load()
         }),
 
         Level.create({}, { -- How to double jump?
+            'BBBBBBBBBBBBBBBBBBB',
             '                  ',
             '                  ',
             '                  ',
@@ -87,13 +92,14 @@ function love.load()
             '                  ',
             ' P         ',
             'BBBBBBBBBBB',
-            'BBBBBBBBBBBBBBBBBB',
+            'BBBBBBBBBBBBBBBBBBB',
         }),
 
 
         -- Mover blocks
 
         Level.create({}, {
+            'BBBBBBBBBBBBBBBBBBBBBBBBB',
             '                         ',
             '                         ',
             '                         ',
@@ -109,9 +115,11 @@ function love.load()
             '                         ',
             '  P                      ',
             'BBBBBBBBBBMMMMBBBBBB     ',
+            'BBBBBBBBBBMMMMBBBBBB     ',
         }),
 
         Level.create({}, {
+            'BBBBBBBBBBBBBBB',
             'BBBBBBBBB      ',
             'BBBBBBBBB      ',
             '     MMM       ',

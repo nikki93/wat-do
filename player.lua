@@ -1,5 +1,8 @@
 local Player = {}
 
+local playerRightImage = love.graphics.newImage('./player-right.png')
+local playerLeftImage = love.graphics.newImage('./player-left.png')
+
 function Player:create()
     -- Init
     self = self or {}
@@ -15,6 +18,8 @@ function Player:create()
 
     self.canDoubleJump = false
 
+    self.dir = 'right'
+
     -- Add to bump world
     self.level.bumpWorld:add(self, self.x - 0.5, self.y - 0.5, 1, 1)
 
@@ -23,10 +28,15 @@ end
 
 function Player:draw()
     love.graphics.stacked('all', function()
-        love.graphics.setColor(0.9, 0, 0.8)
-        love.graphics.rectangle('fill', self.x - 0.5, self.y - 0.5, 1, 1)
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle('line', self.x - 0.5, self.y - 0.5, 1, 1)
+        local image
+        if self.dir == 'left' then
+            image = playerLeftImage
+        else
+            image = playerRightImage
+        end
+        love.graphics.draw(image, self.x, self.y, 0,
+            1 / image:getWidth(), 1 / image:getHeight(),
+            0.5 * image:getWidth(), 0.5 * image:getHeight())
     end)
 end
 
@@ -73,6 +83,8 @@ function Player:update(dt)
             self.vx = PLAYER_RUN_SPEED
         end
     end
+    if self.vx < 0 then self.dir = 'left' end
+    if self.vx > 0 then self.dir = 'right' end
 
     -- Integrate acceleration
     self.vy = self.vy + PLAYER_GRAVITY * dt
