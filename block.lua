@@ -28,7 +28,11 @@ end
 function Block:draw()
     love.graphics.stacked('all', function()
         if self.isMover then
-            love.graphics.setColor(0.93, 0.76, 0.93)
+            if self.moveDirUpdated then
+                love.graphics.setColor(0, 1, 0)
+            else
+                love.graphics.setColor(0.93, 0.76, 0.93)
+            end
         else
             love.graphics.setColor(0, 0, 1)
         end
@@ -71,11 +75,38 @@ end
 
 function Block:setMoveDir(dirX, dirY)
     self.moveDirUpdated = true
+
+    -- See if clear in that direction
+    do
+        local blockers = self.level.bumpWorld:queryRect(
+            self.x - 0.5 + dirX, self.y - 0.5 + dirY, 1, 1,
+            function(obj)
+                if obj == self then return false end
+
+                if obj.isMover then
+                    if obj.moveDirY ~= dirY then return true end
+                    if obj.moveDirX ~= dirX then return true end
+                    return false
+                end
+            end)
+        if #blockers > 0 then
+            return
+        end
+    end
+
     self.moveDirX, self.moveDirY = dirX, dirY
-    local querySize = 1.5
+    local querySize = 1 + 1 / G
     local movers = self.level.bumpWorld:queryRect(
         self.x - 0.5 * querySize, self.y - 0.5 * querySize, querySize, querySize,
         function(obj) return obj.isMover and not obj.moveDirUpdated end)
+
+    table.sort(movers, function(a, b)
+        if dirX < 0 then return a.x < b.x end
+        if dirY < 0 then return a.y < b.y end
+        if dirX > 0 then return a.x > b.x end
+        if dirY > 0 then return a.y > b.y end
+    end)
+
     for _, mover in ipairs(movers) do
         mover:setMoveDir(dirX, dirY)
     end

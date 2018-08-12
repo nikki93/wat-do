@@ -16,7 +16,7 @@ PLAYER_JUMP_SPEED = 21
 PLAYER_RUN_SPEED = 16
 PLAYER_FLOOR_CHECK_THRESHOLD = 0.1 -- How far from feet to look when checking for floors?
 
-BLOCK_MOVE_SPEED = 9
+BLOCK_MOVE_SPEED = 3
 
 
 --------------------------------------------------------------------------------
@@ -31,36 +31,41 @@ Player = require 'player'
 --------------------------------------------------------------------------------
 -- Main Love callbacks
 
+local levels
 local level
 
 function love.load()
-    level = Level.create({}, {
-        'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        'B                                 B',
-        'B                                 B',
-        'B     P                           B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B     BBBB      BBBBBBB           B',
-        'B                                 B',
-        'B                                 B',
-        'B         MMMMMM                  B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B                                 B',
-        'B     M                           B',
-        'B     M                           B',
-        'B     M                           B',
-        'B     M                           B',
-        'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-    })
+    levels = {
+        Level.create({}, {
+            'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
+            'BMMMMMMMMMMMMMM             MMMMMMM',
+            'BMMMMMMMMMMMMMM             MMMMMMM',
+            'BMMMMMMMMMMMMMM             MMMMMMM',
+            'BMMMMMMMMMMMMMM             MMMMMMM',
+            'BMMMMMMMMMMMMMM             MMMMMMM',
+            'BMMMMMMMMMMMMMM             MMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMM     MMMMMMM',
+            'BMMMM                       MMMMMMM',
+            'BMMMM                       MMMMMMM',
+            'BMMMM  P                    MMMMMMM',
+            'BMMMM                       MMMMMMM',
+            'BMMMMBBBBBMMMMMMMMMMMMMMMMMMMMMMMMM',
+            'BMMMMBBBBBMMMMMMMMMMMMM     MMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMM     MMMMMMM',
+            'BMMMMMMMMMMMMMMMMMMMMMM     MMMMMMM',
+            'BMMMM                       MMMMMMM',
+            'BMMMM                       BBBBBBB',
+            'BMMMM                  BBBBBMMMMMMM',
+            'BMMMM                       MMMMMMM',
+        }),
+    }
+
+    level = levels[1]
 end
 
 function love.draw()
