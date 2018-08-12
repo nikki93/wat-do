@@ -76,6 +76,7 @@ function Player:update(dt)
 
     -- Integrate acceleration
     self.vy = self.vy + PLAYER_GRAVITY * dt
+    self.vy = math.min(self.vy, PLAYER_MAX_SPEED)
 
     -- Apply velocity, move, recalculate new velocity
     local newX, newY, cols = self.level.bumpWorld:move(
