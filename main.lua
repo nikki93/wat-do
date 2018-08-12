@@ -135,6 +135,12 @@ function love.load()
 
         -- Mover blocks
 
+    --     ------------------------
+    --     -- start here -- comment out for no skip
+    -- }
+    -- levels = {
+    --     ------------------------
+
         Level.create({}, {
             'BBBBBBBBBBBBBBBBBBBBBBBBB',
             '                         ',
@@ -308,12 +314,6 @@ function love.load()
             'BBBBBBBBBBBBBBBBBDDDDDDDDDDDBBBBBBBBBBBBBBBBBBBBBB',
         }),
 
-    --     ------------------------
-    --     -- start here -- comment out for no skip
-    -- }
-    -- levels = {
-    --     ------------------------
-
 
         {
             draw = function()
@@ -331,13 +331,17 @@ function love.load()
     }
 end
 
-local effect = moonshine(moonshine.effects.glow).chain(moonshine.effects.posterize).chain(moonshine.effects.glow).chain(moonshine.effects.vignette)
+local effect = moonshine(moonshine.effects.glow)
+    .chain(moonshine.effects.posterize)
+    -- .chain(moonshine.effects.glow)
+    .chain(moonshine.effects.vignette)
 
-effect.glow.strength = 2
+effect.glow.strength = 2.2
 
-effect.vignette.color = { 0.7, 0, 0.2 }
+effect.vignette.opacity = 0.2
+-- effect.vignette.color = { 0.7, 0, 0.2 }
 
-effect.posterize.num_bands = 6
+effect.posterize.num_bands = 5
 
 function love.draw()
     effect(function()

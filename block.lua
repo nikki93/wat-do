@@ -1,5 +1,9 @@
 local Block = {}
 
+local function symrand(size)
+    return size * (1 - 2 * math.random())
+end
+
 function Block:create()
     -- Init
     self = self or {}
@@ -111,15 +115,16 @@ function Block:draw()
         if self.isMover then
             if self.moveDirUpdated then
                 love.graphics.setColor(0.2, 1, 0.2)
+                love.graphics.setColor(0.4 + symrand(0.2), 0.62 + symrand(0.2), 1 - 0.2 * math.random())
             else
                 love.graphics.setColor(0.8, 0.52, 1)
             end
         elseif self.isWin then
-            love.graphics.setColor(1, 0.7, 0.2)
+            love.graphics.setColor(1, 1, 0.2)
         elseif self.isDanger then
             love.graphics.setColor(0.9, 0.2, 0.2)
         else
-            love.graphics.setColor(0.9, 0.9, 0.9)
+            love.graphics.setColor(0.7, 0.7, 0.7)
         end
 
         love.graphics.draw(image, self.x, self.y, 0,
