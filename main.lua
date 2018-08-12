@@ -123,6 +123,7 @@ function love.load()
         }),
 
         Level.create({}, {
+            'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
             '                                                                                ',
             '                                                                                ',
             '                                                                                ',
