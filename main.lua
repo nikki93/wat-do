@@ -40,6 +40,8 @@ function win()
 end
 
 local winFont = love.graphics.newFont(150)
+local titleFont = love.graphics.newFont(128)
+local enterFont = love.graphics.newFont(78)
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -47,6 +49,40 @@ function love.load()
     levelIndex = 1
 
     levels = {
+        {
+            draw = function()
+                love.graphics.translate(-0.4 * W, -0.25 * H)
+
+                love.graphics.scale(1 / G)
+
+                love.graphics.setFont(titleFont)
+                local titleText = 'wat do?!'
+                for i = 1, #titleText do
+                    local char = titleText:sub(i, i)
+                    local soFar = titleText:sub(1, i - 1)
+                    love.graphics.setColor(0.25 * math.random(), 0.25 * math.random(), 0.25 * math.random())
+                    love.graphics.print(titleText:sub(i, i), winFont:getWidth(soFar), 0)
+                end
+
+                love.graphics.translate(0.1 * W * G, 0.4 * H * G)
+
+                love.graphics.setFont(enterFont)
+                local enterText = 'ENTER!!'
+                for i = 1, #enterText do
+                    local char = enterText:sub(i, i)
+                    local soFar = enterText:sub(1, i - 1)
+                    love.graphics.setColor(0.25 * math.random(), 0.25 * math.random(), 0.25 * math.random())
+                    love.graphics.print(enterText:sub(i, i), winFont:getWidth(soFar), 0)
+                end
+            end,
+
+            keypressed = function(self, key)
+                if key == 'return' then
+                    win()
+                end
+            end,
+        },
+
         -- Basic movement
 
         Level.create({}, { -- How to win?
