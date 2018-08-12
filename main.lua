@@ -41,7 +41,7 @@ end
 local winFont = love.graphics.newFont(92)
 
 function love.load()
-    love.graphics.setDefaultFilter('nearest')
+    love.graphics.setDefaultFilter('nearest', 'nearest')
 
     levelIndex = 1
 
