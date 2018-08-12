@@ -206,7 +206,7 @@ function Block:setMoveDir(dirX, dirY)
         end
     end
 
-    if not moverSound:isPlaying() then
+    if not moverSound:isPlaying() and (self.moveDirX ~= dirX or self.moveDirY ~= dirY) then
         moverSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
         moverSound:play()
     end
