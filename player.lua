@@ -1,10 +1,10 @@
-local Player = {}
+Player = Player or {}
 
-local playerRightImage = love.graphics.newImage('./player-right.png')
-local playerLeftImage = love.graphics.newImage('./player-left.png')
+Player.rightImage = Player.rightImage or love.graphics.newImage('./player-right.png')
+Player.leftImage = Player.leftImage or love.graphics.newImage('./player-left.png')
 
-local jumpSound = love.audio.newSource('./jump.wav', 'static')
-local winSound = love.audio.newSource('./win.wav', 'static')
+Player.jumpSound = Player.jumpSound or love.audio.newSource('./jump.wav', 'static')
+Player.winSound = Player.winSound or love.audio.newSource('./win.wav', 'static')
 
 function Player:create()
     -- Init
@@ -33,9 +33,9 @@ function Player:draw()
     love.graphics.stacked('all', function()
         local image
         if self.dir == 'left' then
-            image = playerLeftImage
+            image = Player.leftImage
         else
-            image = playerRightImage
+            image = Player.rightImage
         end
         love.graphics.draw(image, self.x, self.y, 0,
             1 / image:getWidth(), 1 / image:getHeight(),
@@ -107,8 +107,8 @@ function Player:update(dt)
         if col.other.isMover then
             col.other:setMoveDir(col.normal.x, col.normal.y)
         elseif col.other.isWin then
-            winSound:play()
-            win()
+            Player.winSound:play()
+            main.win()
         elseif col.other.isDanger then
             self.level:die()
         end
@@ -134,7 +134,7 @@ function Player:tryJump()
         canJump = true
     end
     if canJump then
-        jumpSound:play()
+        Player.jumpSound:play()
         self.vy = -PLAYER_JUMP_SPEED
     end
 end

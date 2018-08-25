@@ -1,11 +1,11 @@
-local Block = {}
+Block = Block or {}
 
-local function symrand(size)
+function Block.symrand(size)
     return size * (1 - 2 * math.random())
 end
 
-local moverSound = love.audio.newSource('./mover1.wav', 'static')
-local movingSound = love.audio.newSource('./mover2.wav', 'static')
+Block.moverSound = Block.moverSound or love.audio.newSource('./mover1.wav', 'static')
+Block.movingSound = Block.movingSound or love.audio.newSource('./mover2.wav', 'static')
 
 BLOCK_MOVE_PITCH_VARIATION = 0.1
 
@@ -34,18 +34,18 @@ function Block:create()
     return self
 end
 
-local staticImageAll = love.graphics.newImage('static-block-all.png')
-local staticImageDownLeft = love.graphics.newImage('static-block-down-left.png')
-local staticImageDown = love.graphics.newImage('static-block-down.png')
-local staticImageDownRight = love.graphics.newImage('static-block-down-right.png')
-local staticImageLeft = love.graphics.newImage('static-block-left.png')
-local staticImageNone = love.graphics.newImage('static-block-none.png')
-local staticImageRight = love.graphics.newImage('static-block-right.png')
-local staticImageUpLeft = love.graphics.newImage('static-block-up-left.png')
-local staticImageUp = love.graphics.newImage('static-block-up.png')
-local staticImageUpRight = love.graphics.newImage('static-block-up-right.png')
+Block.staticImageAll = Block.staticImageAll or love.graphics.newImage('static-block-all.png')
+Block.staticImageDownLeft = Block.staticImageDownLeft or love.graphics.newImage('static-block-down-left.png')
+Block.staticImageDown = Block.staticImageDown or love.graphics.newImage('static-block-down.png')
+Block.staticImageDownRight = Block.staticImageDownRight or love.graphics.newImage('static-block-down-right.png')
+Block.staticImageLeft = Block.staticImageLeft or love.graphics.newImage('static-block-left.png')
+Block.staticImageNone = Block.staticImageNone or love.graphics.newImage('static-block-none.png')
+Block.staticImageRight = Block.staticImageRight or love.graphics.newImage('static-block-right.png')
+Block.staticImageUpLeft = Block.staticImageUpLeft or love.graphics.newImage('static-block-up-left.png')
+Block.staticImageUp = Block.staticImageUp or love.graphics.newImage('static-block-up.png')
+Block.staticImageUpRight = Block.staticImageUpRight or love.graphics.newImage('static-block-up-right.png')
 
-local dirs = {
+Block.dirs = Block.dirs or {
     up = { 0, -1 },
     down = { 0, 1 },
     left = { -1, 0 },
@@ -58,7 +58,9 @@ function Block:hasNeighbor(dir)
     end
 
     local hits = self.level.bumpWorld:queryRect(
-        self.x - 0.5 / G + (0.5 + 1 / G) * dirs[dir][1], self.y - 0.5 / G + (0.5 + 1/ G) * dirs[dir][2], 1 / G, 1 / G,
+        self.x - 0.5 / G + (0.5 + 1 / G) * Block.dirs[dir][1],
+        self.y - 0.5 / G + (0.5 + 1/ G) * Block.dirs[dir][2],
+        1 / G, 1 / G,
         function (obj) return obj ~= self and obj.isFloor end)
     local has = #hits > 0
 
@@ -90,37 +92,37 @@ function Block:draw()
 
         local image
         if nNeighbors >= 3 then
-            image = staticImageAll
+            image = Block.staticImageAll
         elseif nNeighbors == 2 then
             if up and left then
-                image = staticImageUpLeft
+                image = Block.staticImageUpLeft
             elseif up and right then
-                image = staticImageUpRight
+                image = Block.staticImageUpRight
             elseif down and left then
-                image = staticImageDownLeft
+                image = Block.staticImageDownLeft
             elseif down and right then
-                image = staticImageDownRight
+                image = Block.staticImageDownRight
             else
-                image = staticImageAll
+                image = Block.staticImageAll
             end
         elseif nNeighbors == 1 then
             if up then
-                image = staticImageUp
+                image = Block.staticImageUp
             elseif down then
-                image = staticImageDown
+                image = Block.staticImageDown
             elseif left then
-                image = staticImageLeft
+                image = Block.staticImageLeft
             elseif right then
-                image = staticImageRight
+                image = Block.staticImageRight
             end
         else
-            image = staticImageNone
+            image = Block.staticImageNone
         end
 
         if self.isMover then
             if self.moveDirUpdated then
                 love.graphics.setColor(0.2, 1, 0.2)
-                love.graphics.setColor(0.4 + symrand(0.2), 0.62 + symrand(0.2), 1 - 0.2 * math.random())
+                love.graphics.setColor(0.4 + Block.symrand(0.2), 0.62 + Block.symrand(0.2), 1 - 0.2 * math.random())
             else
                 love.graphics.setColor(0.8, 0.52, 1)
             end
@@ -168,9 +170,9 @@ function Block:update(dt)
             newY = newY + 0.5
             self.x, self.y = newX, newY
             if #cols == 0 then
-                if not movingSound:isPlaying() then
-                    movingSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
-                    movingSound:play()
+                if not Block.movingSound:isPlaying() then
+                    Block.movingSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
+                    Block.movingSound:play()
                 end
             end
         end
@@ -206,9 +208,9 @@ function Block:setMoveDir(dirX, dirY)
         end
     end
 
-    if not moverSound:isPlaying() and (self.moveDirX ~= dirX or self.moveDirY ~= dirY) then
-        moverSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
-        moverSound:play()
+    if not Block.moverSound:isPlaying() and (self.moveDirX ~= dirX or self.moveDirY ~= dirY) then
+        Block.moverSound:setPitch(1 + BLOCK_MOVE_PITCH_VARIATION * math.random())
+        Block.moverSound:play()
     end
 
     self.moveDirX, self.moveDirY = dirX, dirY
@@ -230,8 +232,8 @@ function Block:setMoveDir(dirX, dirY)
 end
 
 function Block.stopSounds()
-    moverSound:stop()
-    movingSound:stop()
+    Block.moverSound:stop()
+    Block.movingSound:stop()
 end
 
 return Block

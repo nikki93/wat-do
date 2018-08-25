@@ -1,6 +1,6 @@
-local Level = {}
+Level = Level or {}
 
-local dieSound = love.audio.newSource('./die.wav', 'static')
+Level.dieSound = Level.dieSound or love.audio.newSource('./die.wav', 'static')
 
 function Level:create(layout)
     Block.stopSounds()
@@ -124,7 +124,7 @@ end
 
 function Level:die()
     self.died = true
-    dieSound:play()
+    Level.dieSound:play()
 end
 
 function Level:draw()

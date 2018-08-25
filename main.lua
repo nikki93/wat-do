@@ -24,61 +24,61 @@ BLOCK_MOVE_SPEED = 3
 --------------------------------------------------------------------------------
 -- Modules
 
-util = require 'util'
-Level = require 'level'
-Block = require 'block'
-Player = require 'player'
+require 'util'
+require 'level'
+require 'block'
+require 'player'
 
 
 --------------------------------------------------------------------------------
 -- Main Love callbacks
 
-local levels, levelIndex
+main = {}
 
-function win()
-    levelIndex = levelIndex + 1
+function main.win()
+    main.levelIndex = main.levelIndex + 1
 end
 
-local winFont = love.graphics.newFont(150)
-local titleFont = love.graphics.newFont(128)
-local enterFont = love.graphics.newFont(78)
+main.winFont = main.winFont or love.graphics.newFont(150)
+main.titleFont = main.titleFont or love.graphics.newFont(128)
+main.enterFont = main.enterFont or love.graphics.newFont(78)
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
-    levelIndex = 1
+    main.levelIndex = 1
 
-    levels = {
+    main.levels = {
         {
             draw = function()
                 love.graphics.translate(-0.4 * W, -0.25 * H)
 
                 love.graphics.scale(1 / G)
 
-                love.graphics.setFont(titleFont)
+                love.graphics.setFont(main.titleFont)
                 local titleText = 'wat do?!'
                 for i = 1, #titleText do
                     local char = titleText:sub(i, i)
                     local soFar = titleText:sub(1, i - 1)
                     love.graphics.setColor(0.6 * math.random(), 0.2 * math.random(), 0.6 * math.random())
-                    love.graphics.print(titleText:sub(i, i), winFont:getWidth(soFar), 0)
+                    love.graphics.print(titleText:sub(i, i), main.winFont:getWidth(soFar), 0)
                 end
 
                 love.graphics.translate(0.1 * W * G, 0.4 * H * G)
 
-                love.graphics.setFont(enterFont)
+                love.graphics.setFont(main.enterFont)
                 local enterText = 'ENTER!!'
                 for i = 1, #enterText do
                     local char = enterText:sub(i, i)
                     local soFar = enterText:sub(1, i - 1)
                     love.graphics.setColor(0.2 * math.random(), 0.2 * math.random(), 0.2 * math.random())
-                    love.graphics.print(enterText:sub(i, i), winFont:getWidth(soFar), 0)
+                    love.graphics.print(enterText:sub(i, i), main.winFont:getWidth(soFar), 0)
                 end
             end,
 
             keypressed = function(self, key)
                 if key == 'return' then
-                    win()
+                    main.win()
                 end
             end,
         },
@@ -138,7 +138,7 @@ function love.load()
     --     ------------------------
     --     -- start here -- comment out for no skip
     -- }
-    -- levels = {
+    -- main.levels = {
     --     ------------------------
 
         Level.create({}, {
@@ -318,33 +318,33 @@ function love.load()
         {
             draw = function()
                 love.graphics.scale(1 / G)
-                love.graphics.setFont(winFont)
-                love.graphics.translate(-0.5 * winFont:getWidth('i'), 0.5 * -winFont:getHeight())
+                love.graphics.setFont(main.winFont)
+                love.graphics.translate(-0.5 * main.winFont:getWidth('i'), 0.5 * -main.winFont:getHeight())
                 love.graphics.setColor(math.random(), math.random(), math.random())
-                love.graphics.print('w', -winFont:getWidth('w'), 0)
+                love.graphics.print('w', -main.winFont:getWidth('w'), 0)
                 love.graphics.setColor(math.random(), math.random(), math.random())
                 love.graphics.print('i', 0, 0)
                 love.graphics.setColor(math.random(), math.random(), math.random())
-                love.graphics.print('n', winFont:getWidth('i'), 0)
+                love.graphics.print('n', main.winFont:getWidth('i'), 0)
             end,
         }
     }
 end
 
-local effect = moonshine(moonshine.effects.glow)
+main.effect = main.effect or moonshine(moonshine.effects.glow)
     .chain(moonshine.effects.posterize)
     -- .chain(moonshine.effects.glow)
     .chain(moonshine.effects.vignette)
 
-effect.glow.strength = 2.2
+main.effect.glow.strength = 2.2
 
-effect.vignette.opacity = 0.2
--- effect.vignette.color = { 0.7, 0, 0.2 }
+main.effect.vignette.opacity = 0.2
+-- main.effect.vignette.color = { 0.7, 0, 0.2 }
 
-effect.posterize.num_bands = 5
+main.effect.posterize.num_bands = 5
 
 function love.draw()
-    effect(function()
+    main.effect(function()
         love.graphics.stacked('all', function()
             -- Draw everything centered
             love.graphics.translate(
@@ -363,20 +363,20 @@ function love.draw()
 
             -- Draw everything
             love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
-            levels[levelIndex]:draw()
+            main.levels[main.levelIndex]:draw()
         end)
     end)
 end
 
 function love.update(dt)
-    if levels[levelIndex].update then
-        levels[levelIndex]:update(dt)
+    if main.levels[main.levelIndex].update then
+        main.levels[main.levelIndex]:update(dt)
     end
 end
 
 function love.keypressed(key, sc, isRepeat)
     if isRepeat then return end
-    if levels[levelIndex].keypressed then
-        levels[levelIndex]:keypressed(key)
+    if main.levels[main.levelIndex].keypressed then
+        main.levels[main.levelIndex]:keypressed(key)
     end
 end
