@@ -130,6 +130,7 @@ function Player:tryJump()
     if self:_floored() then
         canJump = true
     elseif self.canDoubleJump then
+        error("this is the 'error' branch, what were you thinking?")
         self.canDoubleJump = false
         canJump = true
     end
