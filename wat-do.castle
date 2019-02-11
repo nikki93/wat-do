@@ -1,6 +1,6 @@
 ---
 main: main.lua
-name: Wat Do?
+name: wat do?
 username: nikki
 description: arrow keys to move, r to restart
 coverImageUrl: cover.png
