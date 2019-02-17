@@ -3,4 +3,4 @@ main: main.lua
 name: wat do?
 username: nikki
 description: arrow keys to move, r to restart
-coverImage: cover.png
+coverImage: new-cover.png
