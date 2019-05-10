@@ -8,6 +8,8 @@ moonshine = require 'moonshine'
 --------------------------------------------------------------------------------
 -- Settings
 
+love.graphics.setDefaultFilter('nearest', 'nearest')
+
 G = 24 -- Number of pixels a grid unit renders to
 
 W, H = 35, 25 -- Number of grid units wide and height the screen is
@@ -331,20 +333,20 @@ function love.load()
     }
 end
 
-main.effect = main.effect or moonshine(moonshine.effects.glow)
-    .chain(moonshine.effects.posterize)
+main.effect = main.effect or moonshine(moonshine.effects.vignette)
+    -- .chain(moonshine.effects.posterize)
     -- .chain(moonshine.effects.glow)
-    .chain(moonshine.effects.vignette)
+    -- .chain(moonshine.effects.vignette)
 
-main.effect.glow.strength = 2.2
+-- main.effect.glow.strength = 1.2
 
 main.effect.vignette.opacity = 0.2
 -- main.effect.vignette.color = { 0.7, 0, 0.2 }
 
-main.effect.posterize.num_bands = 5
+-- main.effect.posterize.num_bands = 5
 
 function love.draw()
-    main.effect(function()
+    -- main.effect(function()
         love.graphics.stacked('all', function()
             -- Draw everything centered
             love.graphics.translate(
@@ -365,7 +367,7 @@ function love.draw()
             love.graphics.rectangle('fill', -0.5 * W, -0.5 * H, W, H)
             main.levels[main.levelIndex]:draw()
         end)
-    end)
+    -- end)
 end
 
 function love.update(dt)
