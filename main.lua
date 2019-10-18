@@ -79,7 +79,7 @@ function love.load()
             end,
 
             keypressed = function(self, key)
-                if key == 'return' then
+                if key == 'return' or key == 'up' then
                     main.win()
                 end
             end,
