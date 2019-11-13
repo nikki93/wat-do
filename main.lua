@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
 -- Libraries
 
-bump = require 'bump' -- 'https://raw.githubusercontent.com/kikito/bump.lua/master/bump.lua'
-moonshine = require 'moonshine'
+bump = require 'https://raw.githubusercontent.com/kikito/bump.lua/7cae5d1ef796068a185d8e2d0c632a030ac8c148/bump.lua'
+moonshine = require 'https://raw.githubusercontent.com/vrld/moonshine/d39271e0c000e2fedbc2e3ad286b78b5a5146065/init.lua'
 
 
 --------------------------------------------------------------------------------
